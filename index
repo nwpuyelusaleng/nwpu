@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>药品查找</title>
+<style>
+#myInput{
+	background-image:url('https://static.runoob.com/images/mix/searchicon.png');
+	background-position:10px 12px;
+	background-repeat:no-repeat;
+	width:100%;
+	font-size:16px;
+	padding:12px 20px 12px 40px;
+	border:1px solid #ddd;
+	margin-bottom:12px;
+}
+
+#myTable{
+	border-collapse:collapse;
+	width:100%;
+	border:1px solid #ddd;
+	font-size:18px;
+}
+
+#myTable th,#myTable td{
+	text-align:left;
+	padding:12px;
+}
+
+#myTable tr{
+	border-bottom:1px solid #ddd;
+}
+
+#myTable tr.header,#myTable tr:hover {
+	background-color:#f1f1f1;
+}
+</style>
+
+<script>
+function myFunction(){
+	var input,filter,table,tr,td,i;
+	input=document.getElementById("myInput");
+	filter=input.value.toUpperCase();
+	table=document.getElementById("myTable");
+	tr=table.getElementsByTagName("tr");
+	
+	for (i=0;i<tr.length;i++){
+		td=tr[i].getElementsByTagName("td")[0];
+		if (td){
+			if (td.innerHTML.toUpperCase().indexOf(filter)>-1)
+			{
+				tr[i].style.display="";
+			}
+			else{
+				tr[i].style.display="none";
+			}
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="搜索..." />
+<table id="myTable">
+<tr class="header">
+<th style="width:20%;">CAS号</th>
+<th style="width:20%;">药品名</th>
+<th style="width:20%;">实验室</th>
+<th style="width:20%;">位置</th>
+<th style="width:20%;">数量</th>
+</tr>
+<tr>
+<td>123</td>
+<td>碳酸钙</td>
+<td>413</td>
+<td>A</td>
+<td>12</td>
+</tr>
+<tr>
+<td>124</td>
+<td>碳酸钠</td>
+<td>414</td>
+<td>B</td>
+<td>11</td>
+</tr>
+<tr>
+<td>125</td>
+<td>硫酸</td>
+<td>415</td>
+<td>C</td>
+<td>13</td>
+</tr>
+<tr>
+<td>126</td>
+<td>硫酸钙</td>
+<td>416</td>
+<td>D</td>
+<td>16</td>
+</tr>
+</table>
+</body>
+</html>
