@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,6 +15,22 @@
 	border:1px solid #ddd;
 	margin-bottom:12px;
 }
+
+#s1,#s2{
+	width:30%;
+	font-size:16px;
+	padding:12px 20px 12px 40px;
+	border:1px solid #ddd;
+	margin-bottom:12px;
+}
+#b1,#b2{
+	width:25%;
+	font-size:16px;
+	padding:12px 20px 12px 40px;
+	border:1px solid #ddd;
+	margin-bottom:12px;
+}
+	
 
 #myTable{
 	border-collapse:collapse;
@@ -57,47 +74,147 @@ function myFunction(){
 		}
 	}
 }
+
+window.onload=function(){
+	var ob1=document.getElementById("b1");
+	
+	var ob2=document.getElementById("b2");
+	
+	var os1=document.getElementById("s1");
+	
+	var os2=document.getElementById("s2");
+	
+	var table=document.getElementById("myTable");
+	
+	for (var i=1;i<31;i++){
+	document.getElementById("amount").options[i]=new Option(i);
+	}
+
+    ob1.onclick=function(){
+		var cas=os1.value;
+		
+		var oTr=document.createElement('tr');
+		
+		var room=document.getElementById("room").options[document.getElementById("room").selectedIndex].text;
+		
+		var pos=document.getElementById("position").options[document.getElementById("position").selectedIndex].text;
+		
+		var amount=document.getElementById("amount").options[document.getElementById("amount").selectedIndex].text;
+		for (var i=0;i<table.tBodies[0].rows.length;i++){
+			var scas=table.tBodies[0].rows[i].cells[0].innerHTML;
+			var sroom=table.tBodies[0].rows[i].cells[2].innerHTML;
+			var spos=table.tBodies[0].rows[i].cells[3].innerHTML;
+		if (cas==scas && room==sroom && pos==spos){
+			 var k=parseInt(table.tBodies[0].rows[i].cells[4].innerHTML);
+				 k+=parseInt(amount);
+				 table.tBodies[0].rows[i].cells[4].innerHTML=k.toString();
+				 break;}
+				 }
+				 
+	if(i==table.tBodies[0].rows.length){
+			
+		var oTd=document.createElement('td');
+		oTd.innerHTML=os1.value;
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=os2.value;
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=room;
+		oTr.appendChild(oTd);
+			
+		var oTd=document.createElement('td');
+		oTd.innerHTML=pos;
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=amount;
+		oTr.appendChild(oTd);
+		
+		table.tBodies[0].appendChild(oTr);}
+		
+		alert("操作成功！")
+}
+
+	ob2.onclick=function(){
+		var cas=os1.value;
+		var pos=document.getElementById("position").options[document.getElementById("position").selectedIndex].text
+		var room=document.getElementById("room").options[document.getElementById("room").selectedIndex].text;
+		var amount=document.getElementById("amount").options[document.getElementById("amount").selectedIndex].text;
+		for (var i=0;i<table.tBodies[0].rows.length;i++){
+			var scas=table.tBodies[0].rows[i].cells[0].innerHTML;
+			var sroom=table.tBodies[0].rows[i].cells[2].innerHTML;
+			var spos=table.tBodies[0].rows[i].cells[3].innerHTML;
+			if (cas==scas && room==sroom){
+				 var k=parseInt(table.tBodies[0].rows[i].cells[4].innerHTML);
+				 if (k>amount){
+				 k-=amount;
+				 table.tBodies[0].rows[i].cells[4].innerHTML=k.toString();
+				 }
+				 else{
+				 table.tBodies[0].removeChild(table.tBodies[0].rows[i]);
+				 }
+			}
+		}
+		alert("操作成功！")
+	}
+}
 </script>
 </head>
 
 <body>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="搜索..." />
+<div align="left">
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="搜索CAS号..." />
+  <input type="text" id="s1" placeholder="输入CAS号" />&nbsp;&nbsp;
+  <input type="text" id="s2" placeholder="输入药品名" />
+</div>
+
+<h2>选择实验室&nbsp;&nbsp;<select id="room" style="width:100px;">
+    <option value=""></option>
+    <option value="1">413</option>
+    <option value="2">414</option>
+    <option value="3">415</option>
+</select>
+
+&nbsp;&nbsp;
+
+选择位置&nbsp;&nbsp;<select id="position" style="width:100px;">
+    <option value=""></option>
+    <option value="1">A</option>
+    <option value="2">B</option>
+    <option value="3">C</option>
+    <option value="4">D</option>
+</select>
+
+&nbsp;&nbsp;
+
+选择数量&nbsp;&nbsp;<select id="amount" style="width:100px;">
+    <option value=""></option>
+</select>
+
+</h2>
+
+  <div align="left"><br />
+  
+    <input type="button" id="b1" style="background:#FF0" value="新增" />
+    &nbsp; 
+    &nbsp; 
+    &nbsp; 
+    &nbsp; 
+    <input type="button" id="b2" style="background:#0F0" value="减少" />
+  </div>
+  
 <table id="myTable">
-<tr class="header">
+  <tr class="header">
 <th style="width:20%;">CAS号</th>
 <th style="width:20%;">药品名</th>
 <th style="width:20%;">实验室</th>
 <th style="width:20%;">位置</th>
 <th style="width:20%;">数量</th>
 </tr>
-<tr>
-<td>123</td>
-<td>碳酸钙</td>
-<td>413</td>
-<td>A</td>
-<td>12</td>
-</tr>
-<tr>
-<td>124</td>
-<td>碳酸钠</td>
-<td>414</td>
-<td>B</td>
-<td>11</td>
-</tr>
-<tr>
-<td>125</td>
-<td>硫酸</td>
-<td>415</td>
-<td>C</td>
-<td>13</td>
-</tr>
-<tr>
-<td>126</td>
-<td>硫酸钙</td>
-<td>416</td>
-<td>D</td>
-<td>16</td>
-</tr>
 </table>
 </body>
 </html>
+
