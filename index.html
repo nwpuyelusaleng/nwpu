@@ -23,8 +23,8 @@
 	border:1px solid #ddd;
 	margin-bottom:12px;
 }
-#b1,#b2{
-	width:25%;
+#b1,#b2,#b3,#b4{
+	width:30%;
 	font-size:16px;
 	padding:12px 20px 12px 40px;
 	border:1px solid #ddd;
@@ -54,6 +54,11 @@
 </style>
 
 <script>
+
+/*window.onbeforeonload()=function(){
+	return('请不要刷新，后退！');
+}*/
+
 function myFunction(){
 	var input,filter,table,tr,td,i;
 	input=document.getElementById("myInput");
@@ -75,6 +80,80 @@ function myFunction(){
 	}
 }
 
+function saveFile(){
+	var table=document.getElementById("myTable");
+	var tbody=table.getElementsByTagName("tbody")[0];
+	var str="";
+	
+	for (var i=1;i<tbody.rows.length;i++){
+		for (var j=0;j<tbody.rows[i].cells.length;j++){
+			
+		str+=tbody.rows[i].cells[j].innerHTML;
+		if (j<4){
+			str+=",";
+		}
+		}
+		str+="!";
+	}
+	var fso;
+	try { 
+	fso=new ActiveXObject("Scripting.FileSystemObject"); 
+	
+	} catch (e) { 
+	alert("当前浏览器不支持");
+	return;
+	} 
+	
+	
+	var f1 = fso.createtextfile("E:\\1.txt",true);
+	f1.write(str);
+	alert("文件已保存");
+}
+
+function readFile(){
+	var table=document.getElementById("myTable");
+	 var fso;
+	try { 
+	fso=new ActiveXObject("Scripting.FileSystemObject"); 
+	
+	} catch (e) { 
+	alert("当前浏览器不支持");
+	return;
+	}  
+	var openf1 = fso.OpenTextFile("E:\\1.txt");
+	
+	var str = openf1.ReadLine();
+	var str1=str.split("!");
+	
+	for (var t=0;t<str1.length-1;t++){
+		var str2=str1[t].split(",");
+		
+		var oTr=document.createElement('tr');
+		var oTd=document.createElement('td');
+		oTd.innerHTML=str2[0];
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=str2[1];
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=str2[2];
+		oTr.appendChild(oTd);
+			
+		var oTd=document.createElement('td');
+		oTd.innerHTML=str2[3];
+		oTr.appendChild(oTd);
+		
+		var oTd=document.createElement('td');
+		oTd.innerHTML=str2[4].toString();
+		oTr.appendChild(oTd);
+		
+		table.tBodies[0].appendChild(oTr);}
+		alert("文件导入成功！");
+			
+}
+
 window.onload=function(){
 	var ob1=document.getElementById("b1");
 	
@@ -86,9 +165,9 @@ window.onload=function(){
 	
 	var table=document.getElementById("myTable");
 	
-	for (var i=1;i<31;i++){
+	/*for (var i=1;i<31;i++){
 	document.getElementById("amount").options[i]=new Option(i);
-	}
+	}*/
 
     ob1.onclick=function(){
 		var cas=os1.value;
@@ -147,7 +226,7 @@ window.onload=function(){
 			var scas=table.tBodies[0].rows[i].cells[0].innerHTML;
 			var sroom=table.tBodies[0].rows[i].cells[2].innerHTML;
 			var spos=table.tBodies[0].rows[i].cells[3].innerHTML;
-			if (cas==scas && room==sroom){
+			if (cas==scas && room==sroom && pos==spos){
 				 var k=parseInt(table.tBodies[0].rows[i].cells[4].innerHTML);
 				 if (k>amount){
 				 k-=amount;
@@ -192,6 +271,16 @@ window.onload=function(){
 
 选择数量&nbsp;&nbsp;<select id="amount" style="width:100px;">
     <option value=""></option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
 </select>
 
 </h2>
@@ -203,7 +292,13 @@ window.onload=function(){
     &nbsp; 
     &nbsp; 
     &nbsp; 
-    <input type="button" id="b2" style="background:#0F0" value="减少" />
+    <input type="button" id="b2" style="background:#0F0" value="减少" /><br />
+    <input type="button" id="b3" onclick="readFile()" style="background:#0FF" value="读取文件(刷新了之后按，其他时间不要按)" />
+     &nbsp; 
+    &nbsp; 
+    &nbsp; 
+    &nbsp; 
+    <input type="button" id="b4" onclick="saveFile()" style="background:#F0F" value="保存文件(退出之前必点，不然数据全没了)" />
   </div>
   
 <table id="myTable">
@@ -217,4 +312,5 @@ window.onload=function(){
 </table>
 </body>
 </html>
+
 
