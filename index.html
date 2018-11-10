@@ -1,316 +1,467 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>药品查找</title>
-<style>
-#myInput{
-	background-image:url('https://static.runoob.com/images/mix/searchicon.png');
-	background-position:10px 12px;
-	background-repeat:no-repeat;
-	width:100%;
-	font-size:16px;
-	padding:12px 20px 12px 40px;
-	border:1px solid #ddd;
-	margin-bottom:12px;
-}
+<title>首页</title>
+<style type="text/css">
 
-#s1,#s2{
-	width:30%;
-	font-size:16px;
-	padding:12px 20px 12px 40px;
-	border:1px solid #ddd;
-	margin-bottom:12px;
-}
-#b1,#b2,#b3,#b4{
-	width:30%;
-	font-size:16px;
-	padding:12px 20px 12px 40px;
-	border:1px solid #ddd;
-	margin-bottom:12px;
-}
 	
-
-#myTable{
-	border-collapse:collapse;
-	width:100%;
-	border:1px solid #ddd;
-	font-size:18px;
+#title {
+	font-size: 36px;
+	text-align: center;
+	vertical-align: middle;
 }
-
-#myTable th,#myTable td{
-	text-align:left;
-	padding:12px;
+#table {
+	background-color: #FFC;
+	font-size: 24px;
+	font-family: Tahoma, Geneva, sans-serif;
 }
-
-#myTable tr{
-	border-bottom:1px solid #ddd;
+#red {
+	color: #F00;
 }
-
-#myTable tr.header,#myTable tr:hover {
-	background-color:#f1f1f1;
+a {
+	text-decoration: none;
+	color: #00F;
+}
+#intro {
+	font-size: 24px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-style: normal;
+	font-weight: bold;
+}
+a:hover {
+	color: #FF0;
+}
+a:active {
+	color: #F00;
+}
+body {
+	background-color: #EFF7FF;
+}
+#title2 {
+	font-size: 24px;
+	text-align: center;
+	vertical-align: middle;
+}
+#title4 {
+	font-size: 24px;
+	text-align: center;
+	vertical-align: middle;
+}
+#fill {
+	color: #0F0;
 }
 </style>
-
 <script>
-
-/*window.onbeforeonload()=function(){
-	return('请不要刷新，后退！');
-}*/
-
-function myFunction(){
-	var input,filter,table,tr,td,i;
-	input=document.getElementById("myInput");
-	filter=input.value.toUpperCase();
-	table=document.getElementById("myTable");
-	tr=table.getElementsByTagName("tr");
-	
-	for (i=0;i<tr.length;i++){
-		td=tr[i].getElementsByTagName("td")[0];
-		if (td){
-			if (td.innerHTML.toUpperCase().indexOf(filter)>-1)
-			{
-				tr[i].style.display="";
-			}
-			else{
-				tr[i].style.display="none";
-			}
-		}
+function num2day(numday){
+var a=[0,1,2,3,4,5,6];
+var b=['日','一','二','三','四','五','六'];
+for (var i=0;i<a.length;i++){
+    if (a[i]==numday){
+	c=i;break;
 	}
 }
-
-function saveFile(){
-	var table=document.getElementById("myTable");
-	var tbody=table.getElementsByTagName("tbody")[0];
-	var str="";
-	
-	for (var i=1;i<tbody.rows.length;i++){
-		for (var j=0;j<tbody.rows[i].cells.length;j++){
-			
-		str+=tbody.rows[i].cells[j].innerHTML;
-		if (j<4){
-			str+=",";
-		}
-		}
-		str+="!";
-	}
-	var fso;
-	try { 
-	fso=new ActiveXObject("Scripting.FileSystemObject"); 
-	
-	} catch (e) { 
-	alert("当前浏览器不支持");
-	return;
-	} 
-	
-	
-	var f1 = fso.createtextfile("E:\\1.txt",true);
-	f1.write(str);
-	alert("文件已保存");
+return b[c];
 }
-
-function readFile(){
-	var table=document.getElementById("myTable");
-	 var fso;
-	try { 
-	fso=new ActiveXObject("Scripting.FileSystemObject"); 
-	
-	} catch (e) { 
-	alert("当前浏览器不支持");
-	return;
-	}  
-	var openf1 = fso.OpenTextFile("E:\\1.txt");
-	
-	var str = openf1.ReadLine();
-	var str1=str.split("!");
-	
-	for (var t=0;t<str1.length-1;t++){
-		var str2=str1[t].split(",");
-		
-		var oTr=document.createElement('tr');
-		var oTd=document.createElement('td');
-		oTd.innerHTML=str2[0];
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=str2[1];
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=str2[2];
-		oTr.appendChild(oTd);
-			
-		var oTd=document.createElement('td');
-		oTd.innerHTML=str2[3];
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=str2[4].toString();
-		oTr.appendChild(oTd);
-		
-		table.tBodies[0].appendChild(oTr);}
-		alert("文件导入成功！");
-			
-}
-
 window.onload=function(){
-	var ob1=document.getElementById("b1");
 	
-	var ob2=document.getElementById("b2");
-	
-	var os1=document.getElementById("s1");
-	
-	var os2=document.getElementById("s2");
-	
-	var table=document.getElementById("myTable");
-	
-	/*for (var i=1;i<31;i++){
-	document.getElementById("amount").options[i]=new Option(i);
-	}*/
-
-    ob1.onclick=function(){
-		var cas=os1.value;
-		
-		var oTr=document.createElement('tr');
-		
-		var room=document.getElementById("room").options[document.getElementById("room").selectedIndex].text;
-		
-		var pos=document.getElementById("position").options[document.getElementById("position").selectedIndex].text;
-		
-		var amount=document.getElementById("amount").options[document.getElementById("amount").selectedIndex].text;
-		for (var i=0;i<table.tBodies[0].rows.length;i++){
-			var scas=table.tBodies[0].rows[i].cells[0].innerHTML;
-			var sroom=table.tBodies[0].rows[i].cells[2].innerHTML;
-			var spos=table.tBodies[0].rows[i].cells[3].innerHTML;
-		if (cas==scas && room==sroom && pos==spos){
-			 var k=parseInt(table.tBodies[0].rows[i].cells[4].innerHTML);
-				 k+=parseInt(amount);
-				 table.tBodies[0].rows[i].cells[4].innerHTML=k.toString();
-				 break;}
-				 }
-				 
-	if(i==table.tBodies[0].rows.length){
-			
-		var oTd=document.createElement('td');
-		oTd.innerHTML=os1.value;
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=os2.value;
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=room;
-		oTr.appendChild(oTd);
-			
-		var oTd=document.createElement('td');
-		oTd.innerHTML=pos;
-		oTr.appendChild(oTd);
-		
-		var oTd=document.createElement('td');
-		oTd.innerHTML=amount;
-		oTr.appendChild(oTd);
-		
-		table.tBodies[0].appendChild(oTr);}
-		
-		alert("操作成功！")
+	function tick(){	
+		var oDate=new Date()
+        var oDiv =document.getElementById('title2');
+        oDiv.innerHTML=oDate.getFullYear()+'年'+(oDate.getMonth()+1)+'月'+oDate.getDate()+
+		'日'+'     '+'星期'+num2day(oDate.getDay())
+    }
+	timer=setInterval(tick,1000);
+	tick();
 }
 
-	ob2.onclick=function(){
-		var cas=os1.value;
-		var pos=document.getElementById("position").options[document.getElementById("position").selectedIndex].text
-		var room=document.getElementById("room").options[document.getElementById("room").selectedIndex].text;
-		var amount=document.getElementById("amount").options[document.getElementById("amount").selectedIndex].text;
-		for (var i=0;i<table.tBodies[0].rows.length;i++){
-			var scas=table.tBodies[0].rows[i].cells[0].innerHTML;
-			var sroom=table.tBodies[0].rows[i].cells[2].innerHTML;
-			var spos=table.tBodies[0].rows[i].cells[3].innerHTML;
-			if (cas==scas && room==sroom && pos==spos){
-				 var k=parseInt(table.tBodies[0].rows[i].cells[4].innerHTML);
-				 if (k>amount){
-				 k-=amount;
-				 table.tBodies[0].rows[i].cells[4].innerHTML=k.toString();
-				 }
-				 else{
-				 table.tBodies[0].removeChild(table.tBodies[0].rows[i]);
-				 }
-			}
-		}
-		alert("操作成功！")
-	}
-}
+
 </script>
+
 </head>
 
 <body>
-<div align="left">
-  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="搜索CAS号..." />
-  <input type="text" id="s1" placeholder="输入CAS号" />&nbsp;&nbsp;
-  <input type="text" id="s2" placeholder="输入药品名" />
+
+<div align="center">
+  <a name="a11" id="a11"></a>
+  <table width="553" border="0">
+    <tr>
+      <td width="200" rowspan="2"><div align="center"><img src="../资料/校徽.jpg" loop="-1" width="200" height="200" /></div></td>
+      <td id='title' width="233" height="158">张秋禹教授课题组</td>
+    </tr>
+    <tr>
+      <td height="40" id='title2'><div align="center"></div></td>
+    </tr>
+  </table>
+</div>
+<p>&nbsp;</p>
+
+<table width="1097" height="73" border="0" align="center" id='table'>
+  <tr align="center">
+    <td width="100" height="32"><a href="#a1">小组简介</a></td>
+    <td width="100"><a href="#a2">教师介绍</a></td>
+    <td width="100"><a href="#a3">成员介绍</a></td>
+    <td width="100"><a href="#a4">科研项目</a></td>
+    <td width="100"><a href="#a5">交流合作</a></td>
+  </tr>
+  <tr align="center">
+    <td height="35"><a href="#a6">论文发表</a></td>
+    <td><a href="#a7">专利介绍</a></td>
+    <td><a href="#a8">出版著作</a></td>
+    <td><a href="#a9">荣誉奖励</a></td>
+    <td><a href="#a10">联系我们</a></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<a name="a1" id="a1"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">小&nbsp;&nbsp;&nbsp;组&nbsp;&nbsp;&nbsp;简&nbsp;&nbsp;&nbsp;介</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="1091" height="37"><p align="center">&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://www.polymer.cn/uploadfile/wonderful/20160411171039_6718.jpg" alt="" width="250" height="265" /></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1803课题组，是。。。。。。。  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="实验/shiyan.html">更多&gt;&gt;</a></p>
+    </td>
+  </tr>
+</table>
+    
+<p>&nbsp;</p>
+
+<a name="a2" id="a2"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">教&nbsp;&nbsp;&nbsp;师&nbsp;&nbsp;&nbsp;介&nbsp;&nbsp;&nbsp;绍</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="300"><div align="center"><a href="教师/张秋禹教授/qyzhang.html"><img src="http://www.polymer.cn/uploadfile/about/20170904211109_7782.png" alt="" border="0" align="absmiddle" /></a></div></td>
+    <td width="266">&nbsp;</td>
+    <td width="234">&nbsp;</td>
+    <td width="279">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="38"><div align="center">张秋禹教授</div></td>
+    <td><div align="center">张宝亮教授</div></td>
+    <td><div align="center">顾军渭教授</div></td>
+    <td><div align="center">耿旺昌副教授</div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="4"><div align="center">更多&gt;&gt;</div></td>
+  </tr>
+</table>
+
+<p align="center">&nbsp;</p>
+
+<a name="a3" id="a3"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">成&nbsp;&nbsp;&nbsp;员&nbsp;&nbsp;&nbsp;介&nbsp;&nbsp;&nbsp;绍</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="100"><div align="center"><a href="成员/maaijie.html"><img src="http://www.polymer.cn/uploadfile/news/20141115141032_3003.jpg" alt="" width="200" height="265" /></a></div></td>
+    <td width="100"><div align="center"><a href="成员/lipeitao.html"><img src="http://www.polymer.cn/uploadfile/news/20141114221749_2222.jpg" alt="" width="200" height="265" /></a></div></td>
+    <td width="100"><div align="center"><a href="成员/fanlili.html"><img src="http://www.polymer.cn/uploadfile/news/20141117122255_5414.png" alt="" width="200" height="265" /></a></div></td>
+    <td width="100"><div align="center"><a href="成员/wangshenqiang.html"><img src="http://www.polymer.cn/uploadfile/news/20141114202821_3941.jpg" alt="" width="205" height="265" /></a></div></td>
+  </tr>
+  <tr>
+    <td height="38"><div align="center">马爱洁</div></td>
+    <td><div align="center">李佩陶</div></td>
+    <td><div align="center">范丽莉</div></td>
+    <td><div align="center">王慎强</div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="4"><div align="center">更多&gt;&gt;</div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<a name="a4" id="a4"></a>
+<table width="1096" border="0" align="center">
+  <tr>
+    <td width="433" bgcolor="#000000">&nbsp;</td>
+    <td width="216">&nbsp;</td>
+    <td width="433">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">科&nbsp;&nbsp;&nbsp;研&nbsp;&nbsp;&nbsp;项&nbsp;&nbsp;&nbsp;目</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<div align="center">
+  <table width="1096" height="141" border="0">
+    <tr>
+      <td width="448"><div align="left"><a href="科研项目/xiangmu1.html" title="多点接枝协同可逆共价交联结构聚合物弹性体合成与性能研究" target="_blank">多点接枝协同可逆共价交联结构聚合物弹性体合成与性能研究</a></div></td>
+      <td width="90">&nbsp;</td>
+      <td width="446"><a href="科研项目/xiangmu2.html" title="新型高效聚合物固定化酶载体规模化制备和应用关键技术" target="_blank">新型高效聚合物固定化酶载体规模化制备和应用关键技术</a></td>
+      <td width="94">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><div align="left"><a href="科研项目/xiangmu3.html" title="腮腺炎减毒活疫苗等病毒性疫苗关键技术及产品研发" target="_blank">腮腺炎减毒活疫苗等病毒性疫苗关键技术及产品研发</a></div></td>
+      <td>&nbsp;</td>
+      <td><a href="科研项目/xiangmu4.html" title="微纳米高分子复合颗粒材料合成与应用基础研究" target="_blank">微纳米高分子复合颗粒材料合成与应用基础研究</a></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><div align="left"><a href="科研项目/xiangmu5.html" title="新型磁性多层次组装单元构建及磁场下组装响应机制研究" target="_blank">新型磁性多层次组装单元构建及磁场下组装响应机制研究</a></div></td>
+      <td>&nbsp;</td>
+      <td><a href="科研项目/xiangmu6.html" title="蛋白印迹响应性高分子磁性复合微球多层次结构调整与性能" target="_blank">蛋白印迹响应性高分子磁性复合微球多层次结构调整与性能</a></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td><div align="left"><a href="科研项目/xiangmu7.html" title="******自修复" target="_blank">******自修复</a></div></td>
+      <td>&nbsp;</td>
+      <td>更多&gt;&gt;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+</div>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<a name="a5" id="a5"></a>
+<table width="1096" border="0" align="center">
+  <tr>
+    <td width="433" bgcolor="#000000">&nbsp;</td>
+    <td width="216">&nbsp;</td>
+    <td width="433">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">交&nbsp;&nbsp;&nbsp;流&nbsp;&nbsp;&nbsp;合&nbsp;&nbsp;&nbsp;作</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <table width="1095" border="0">
+    <tr>
+      <td height="90" valign="middle">
+      <p style="line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;本课题组十分重视国内外科研合作与学术交流，先后与美国、英国、加拿大等国家与地区开展合作与交流，为课题组成员提供了联合培养及短期访学的良好平台，培养了一批从事功能有机材料微结构设计与制备方面的高级人才。</p></td>
+    </tr>
+    <tr>
+      <td height="39"><a href="交流/jiaoliu1.html" title="邀请美国田纳西大学Jimmy Mays教授做学术报告" target="_blank">邀请美国田纳西大学Jimmy Mays教授做学术报告</a></td>
+    </tr>
+    <tr>
+      <td height="38"><a href="交流/jiaoliu2.html" title="邀请美国凯斯西储大学Eric Baer教授做学术报告" target="_blank">邀请美国凯斯西储大学Eric Baer教授做学术报告</a></td>
+    </tr>
+    <tr>
+      <td height="34"><a href="交流/jiaoliu3.html" title="邀请美国凯斯西储大学Ica Manas-Zloczower教授做学术报告" target="_blank">邀请美国凯斯西储大学Ica Manas-Zloczower教授做学术报告</a></td>
+    </tr>
+    <tr>
+      <td height="39">更多 &gt;&gt;</td>
+    </tr>
+  </table>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<a name="a6" id="a6"></a>
+<table width="1096" border="0" align="center">
+  <tr>
+    <td width="433" bgcolor="#000000">&nbsp;</td>
+    <td width="216">&nbsp;</td>
+    <td width="433">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">论&nbsp;&nbsp;&nbsp;文&nbsp;&nbsp;&nbsp;发&nbsp;&nbsp;&nbsp;表</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="543.5" height="375"><div align="center"><a href="论文/lunwen1.html"><img src="http://www.polymer.cn/uploadfile/about/20170607152415_8621.gif" alt="" width="430" height="344" /></a></div>      <div align="center"></div></td>
+    <td width="543.5"><div align="center"><a href="论文/lunwen2.html"><img src="http://www.polymer.cn/uploadfile/about/20170607152611_0845.jpg" alt="" width="430" height="344" /></a></div>      <div align="center"></div></td>
+  </tr>
+  <tr>
+    <td height="32"><div align="center"><a href="论文/lunwen3.html"><img src="http://www.polymer.cn/uploadfile/about/20170607151603_3589.jpg" alt="" width="430" height="344" /></a></div></td>
+    <td height="32"><div align="center"><a href="论文/lunwen4.html"><img src="http://www.polymer.cn/uploadfile/about/20170607151407_4809.gif" alt="" width="430" height="344" /></a></div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="2"><div align="center">更多&gt;&gt;</div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<a name="a7" id="a7"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">专&nbsp;&nbsp;&nbsp;利&nbsp;&nbsp;&nbsp;介&nbsp;&nbsp;&nbsp;绍</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<a name="a8" id="a8"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">出&nbsp;&nbsp;&nbsp;版&nbsp;&nbsp;&nbsp;著&nbsp;&nbsp;&nbsp;作</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<a name="a9" id="a9"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">荣&nbsp;&nbsp;&nbsp;誉&nbsp;&nbsp;&nbsp;奖&nbsp;&nbsp;&nbsp;励</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<a name="a10" id="a10"></a>
+<table width="1097" border="0" align="center">
+  <tr>
+    <td width="400" bgcolor="#000000">&nbsp;</td>
+    <td width="200">&nbsp;</td>
+    <td width="400">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="39">&nbsp;</td>
+    <td id='intro' align="center" valign="middle">联&nbsp;&nbsp;&nbsp;系&nbsp;&nbsp;&nbsp;我&nbsp;&nbsp;&nbsp;们</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td bgcolor="#000000">&nbsp;</td>
+  </tr>
+</table>
+<div align="center">
+  <table width="1095" border="0">
+    <tr>
+      <td bgcolor="#000000"><div align="center">
+        <table id='fill' width="484" border="0">
+          <tr>
+            <td width="237" height="40"><div align="center">通信地址</div></td>
+            <td width="237"><div align="center">陕西省西安市友谊西路127号</div></td>
+            </tr>
+          <tr>
+            <td height="40"><div align="center">邮编</div></td>
+            <td><div align="center">710072</div></td>
+            </tr>
+          <tr>
+            <td height="40"><div align="center">电话</div></td>
+            <td><div align="center">02988431653</div></td>
+            </tr>
+          <tr>
+            <td height="40"><div align="center">传真</div></td>
+            <td><div align="center">02988431653</div></td>
+            </tr>
+          <tr>
+            <td height="40"><div align="center">邮箱</div></td>
+            <td><div align="center"><a href="mailto:qyzhang@nwpu.edu.cn" target="_blank">qyzhang@nwpu.edu.cn</a></div></td>
+            </tr>
+        </table>
+      </div></td>
+    </tr>
+  </table>
 </div>
 
-<h2>选择实验室&nbsp;&nbsp;<select id="room" style="width:100px;">
-    <option value=""></option>
-    <option value="1">413</option>
-    <option value="2">414</option>
-    <option value="3">415</option>
-</select>
-
-&nbsp;&nbsp;
-
-选择位置&nbsp;&nbsp;<select id="position" style="width:100px;">
-    <option value=""></option>
-    <option value="1">A</option>
-    <option value="2">B</option>
-    <option value="3">C</option>
-    <option value="4">D</option>
-</select>
-
-&nbsp;&nbsp;
-
-选择数量&nbsp;&nbsp;<select id="amount" style="width:100px;">
-    <option value=""></option>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-    <option value="10">10</option>
-</select>
-
-</h2>
-
-  <div align="left"><br />
-  
-    <input type="button" id="b1" style="background:#FF0" value="新增" />
-    &nbsp; 
-    &nbsp; 
-    &nbsp; 
-    &nbsp; 
-    <input type="button" id="b2" style="background:#0F0" value="减少" /><br />
-    <input type="button" id="b3" onclick="readFile()" style="background:#0FF" value="读取文件(刷新了之后按，其他时间不要按)" />
-     &nbsp; 
-    &nbsp; 
-    &nbsp; 
-    &nbsp; 
-    <input type="button" id="b4" onclick="saveFile()" style="background:#F0F" value="保存文件(退出之前必点，不然数据全没了)" />
-  </div>
-  
-<table id="myTable">
-  <tr class="header">
-<th style="width:20%;">CAS号</th>
-<th style="width:20%;">药品名</th>
-<th style="width:20%;">实验室</th>
-<th style="width:20%;">位置</th>
-<th style="width:20%;">数量</th>
-</tr>
-</table>
+<p style="position:fixed; right:0;bottom:0" align="center"><a href="#a11">返回顶部</a></p>
 </body>
 </html>
-
-
