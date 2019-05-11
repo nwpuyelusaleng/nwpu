@@ -2,35 +2,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>网站进入页</title>
-<style>
-
-#bianhao,#but1{
-	width:5%;
-	height:40px;
-	font-size:16px;
-}
-</style>
+<title>文档下载</title>
 <script>
-function enter(){
-var onumber=document.getElementById("bianhao");
-var oenter=document.getElementById("fangwen");
+function Function1(){
+	var o1=document.getElementById("book");
+	var o2=document.getElementById("page");
+	var o3=document.getElementById("txt");
+	var pagenum=o2.value;
+	var room=o1.options[o1.selectedIndex].text;
+	if (room=='聚合物共混改性'){
+		o3.href="txt/共混/"+pagenum+".jpg.txt";
+		}
+		else
+		{
+		o3.href="txt/新编/"+pagenum+".jpg.txt";
+			}
 
-if (onumber.value=="1803"){
-	oenter.style.display="block";	
 }
+
+function Function2(){
+	var o1=document.getElementById("book");
+	var o2=document.getElementById("page2");
+	var o3=document.getElementById("jpg");
+	var pagenum=o2.value;
+	var room=o1.options[o1.selectedIndex].text;
+	if (room=='聚合物共混改性'){
+		o3.href="jpg/共混/"+pagenum+".jpg";
+		}
+		else
+		{
+		o3.href="jpg/新编/"+pagenum+".jpg";
+			}
+
 }
-</script>
+    </script>
 </head>
 
 <body>
-<center><h1>输入课题组编号：
-<input type="text" id="bianhao" />
-<input type="button" id="but1" value="进入" onclick="enter() " />
-</h1>
-<br />
-<br />
-<h2><a href="final3.html" id="fangwen" style="display:none">欢迎光临1803课题组，点我进行下面的服务!!</a></h2>
-</center>
+<p>选择一本书 </p>
+
+<select id="book" style="width:500px;">
+    <option value="1">新编高聚物的结构与性能</option>
+    <option value="2" selected="selected">聚合物共混改性</option>
+</select>
+<p>输入文本页码</p>
+<input type="text" id="page" placeholder="默认为聚合物共混改性第一页"  onchange="Function1()"/>
+<p>输入图片页码</p>
+<input type="text" id="page2" placeholder="默认为聚合物共混改性第一页"  onchange="Function2()"/>
+<p><a href="txt/共混/1.jpg.txt" id="txt">下载文本</a></p>
+<p><a href="jpg/共混/1.jpg" id="jpg">下载图片</a></p>
 </body>
 </html>
+
